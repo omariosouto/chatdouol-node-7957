@@ -1,0 +1,25 @@
+<h1>Chat do Uol</h1>
+<ul>
+</ul>
+
+<form action="">
+    <input class="chat__message" type="text">
+    <button type="submit">Enviar</button>
+</form> 
+<script src="/socket.io/socket.io.js"></script>
+<script>
+    const socket = io()
+
+    socket.on('SERVER_SENDMESSAGE', (dadosDoServer) => {
+        const ul = document.querySelector('ul')
+        ul.innerHTML += `<li>${dadosDoServer}</li>`
+    })
+
+    document.querySelector('form').addEventListener('submit', (infosDoEvento) => {
+        infosDoEvento.preventDefault()
+        socket.emit(
+            'CLIENT_SENDMESSAGE',
+            document.querySelector('.chat__message').value
+        )
+    })
+</script>
